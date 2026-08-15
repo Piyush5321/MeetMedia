@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeetMedia - Login & Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            height: 600px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+            width: 50%;
+        }
+
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .container.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+        }
+
+        .container.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+        }
+
+        form {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input {
+            background: #eee;
+            border: none;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            background: #ddd;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        button {
+            border-radius: 20px;
+            border: 1px solid #667eea;
+            background: #667eea;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 0.1s;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:hover {
+            background: #764ba2;
+            border-color: #764ba2;
+        }
+
+        .ghost {
+            background-color: transparent;
+            border-color: white;
+            color: white;
+        }
+
+        .ghost:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .panel-container {
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            right: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+            z-index: 6;
+            text-align: center;
+            padding: 0 40px;
+        }
+
+        .container.right-panel-active .panel-container {
+            transform: translateX(-100%);
+        }
+
+        .panel-container h1 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .panel-container p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .toggle-button {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .toggle-button:hover {
+            background-color: white;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                height: auto;
+                margin: 20px;
+            }
+
+            .form-container,
+            .panel-container {
+                width: 100% !important;
+                position: static;
+                transform: none !important;
+                height: auto;
+            }
+
+            form {
+                padding: 40px 20px;
+            }
+
+            .panel-container {
+                display: none;
+            }
+
+            .sign-up-container,
+            .sign-in-container {
+                display: none;
+            }
+
+            .container.right-panel-active .sign-up-container {
+                display: flex;
+            }
+
+            .sign-in-container {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <!-- Sign Up Form -->
+        <div class="form-container sign-up-container">
+            <form id="signupForm">
+                <h1>Create Account</h1>
+                <input type="text" placeholder="Full Name" id="signupName" required />
+                <input type="email" placeholder="Email" id="signupEmail" required />
+                <input type="password" placeholder="Password" id="signupPassword" required />
+                <input type="password" placeholder="Confirm Password" id="signupConfirmPassword" required />
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Sign In Form -->
+        <div class="form-container sign-in-container">
+            <form id="signinForm">
+                <h1>Sign In</h1>
+                <input type="email" placeholder="Email" id="signinEmail" required />
+                <input type="password" placeholder="Password" id="signinPassword" required />
+                <a href="#" style="color: #667eea; text-decoration: none; margin-top: 10px; font-size: 14px;">Forgot your password?</a>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+
+        <!-- Toggle Panel -->
+        <div class="panel-container">
+            <div class="panel">
+                <h1>Welcome to MeetMedia!</h1>
+                <p id="panelText">Don't have an account? Join us and start connecting with others today.</p>
+                <button class="toggle-button ghost" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const signUpBtn = document.getElementById('signUp');
+        const signInBtn = document.getElementById('signIn');
+        const signupForm = document.getElementById('signupForm');
+        const signinForm = document.getElementById('signinForm');
+
+        // Toggle between sign in and sign up
+        signUpBtn.addEventListener('click', () => {
+            container.classList.add('right-panel-active');
+            updatePanelText();
+        });
+
+        // Create sign in button for toggling back
+        const panelContainer = document.querySelector('.panel-container');
+        const panelDiv = panelContainer.querySelector('.panel');
+        
+        // Add sign in toggle button
+        const signInToggleBtn = document.createElement('button');
+        signInToggleBtn.className = 'toggle-button ghost';
+        signInToggleBtn.textContent = 'Sign In';
+        signInToggleBtn.addEventListener('click', () => {
+            container.classList.remove('right-panel-active');
+            updatePanelText();
+        });
+
+        // Insert sign in button after sign up button
+        panelDiv.appendChild(signInToggleBtn);
+
+        function updatePanelText() {
+            const panelText = document.getElementById('panelText');
+            const isSignUp = container.classList.contains('right-panel-active');
+            if (isSignUp) {
+                panelText.textContent = 'Already have an account? Sign in and continue your journey.';
+            } else {
+                panelText.textContent = 'Don\'t have an account? Join us and start connecting with others today.';
+            }
+        }
+
+        // Handle sign up form submission
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long!');
+                return;
+            }
+
+            console.log('Sign Up Data:', { name, email, password });
+            alert('Sign up successful! Welcome ' + name);
+            signupForm.reset();
+        });
+
+        // Handle sign in form submission
+        signinForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('signinEmail').value;
+            const password = document.getElementById('signinPassword').value;
+
+            if (!email || !password) {
+                alert('Please fill in all fields!');
+                return;
+            }
+
+            console.log('Sign In Data:', { email, password });
+            alert('Signed in successfully! Welcome back');
+            signinForm.reset();
+        });
+    </script>
+</body>
+</html>
