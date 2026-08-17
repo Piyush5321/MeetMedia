@@ -1,0 +1,314 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    🗺️  MEETMEDIA NAVIGATION GUIDE 🗺️                      ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+COMPLETE WEBSITE STRUCTURE & LINKING
+════════════════════════════════════════════════════════════════════════════════
+
+🌍 WEBSITE PAGES (6 Total):
+════════════════════════════════════════════════════════════════════════════════
+
+1️⃣  index.html (LANDING PAGE)
+    ├─ Public website for visitors
+    ├─ Navigation: "Login" → login.html
+    ├─ Navigation: "Sign Up" → signup.html
+    └─ No authentication required
+
+2️⃣  login.html (LOGIN PAGE)
+    ├─ Email/Password login
+    ├─ Google Sign-In button
+    ├─ Navigation: "Sign up here" → signup.html
+    └─ After login → dashboard.html
+
+3️⃣  signup.html (REGISTRATION PAGE)
+    ├─ Email/Password registration
+    ├─ Google Sign-Up button
+    ├─ Navigation: "Sign in here" → login.html
+    └─ After signup → dashboard.html
+
+4️⃣  dashboard.html (MAIN DASHBOARD)
+    ├─ 6 Tabs: Home, Discover, Messages, Events, Profile, Settings
+    ├─ Sidebar: Quick links to pages
+    │  ├─ "Full Discover" → discover.html
+    │  └─ "Messages" → messages.html
+    ├─ Discover Tab: "View Full Discovery Page" → discover.html
+    ├─ Messages Tab: "Open Messages" → messages.html
+    └─ Logout → login.html
+
+5️⃣  discover.html (FULL DISCOVER PAGE) ⭐ NEW!
+    ├─ 7 Tabs with all website information
+    │  ├─ Tab 1: 👥 Discover People (6 user profiles)
+    │  ├─ Tab 2: ✨ Features (6 features)
+    │  ├─ Tab 3: 🎯 How It Works (6 steps)
+    │  ├─ Tab 4: ℹ️ About Us (Mission, vision, stats)
+    │  ├─ Tab 5: 🛡️ Safety (Guidelines & tips)
+    │  ├─ Tab 6: ⚙️ Technology (Tech stack)
+    │  └─ Tab 7: ❓ FAQ (8 questions)
+    ├─ User profiles with Connect & Message buttons
+    ├─ Search functionality for users
+    ├─ Navigation: "← Dashboard" → dashboard.html
+    └─ Navigation: "💬 Messages" → messages.html
+
+6️⃣  messages.html (MESSAGING SYSTEM) ⭐
+    ├─ Real-time messaging with Firebase
+    ├─ Left sidebar: Conversation list
+    ├─ Main area: Chat window
+    ├─ Search conversations
+    ├─ User profiles in header
+    ├─ Navigation: "Back" → dashboard.html
+    └─ Firebase Firestore integrated
+
+════════════════════════════════════════════════════════════════════════════════
+
+🔗 NAVIGATION FLOW DIAGRAM:
+════════════════════════════════════════════════════════════════════════════════
+
+START
+  │
+  ├─→ index.html (Landing Page)
+  │     │
+  │     ├─→ "Login" → login.html
+  │     │             │
+  │     │             ├─→ "Sign in" → dashboard.html
+  │     │             └─→ "Sign up here" → signup.html
+  │     │
+  │     └─→ "Sign Up" → signup.html
+  │                     │
+  │                     ├─→ "Sign up" → dashboard.html
+  │                     └─→ "Sign in here" → login.html
+  │
+  └─→ dashboard.html (Main Dashboard)
+        │
+        ├─→ NAVBAR MENU:
+        │    ├─ Home (current page)
+        │    ├─ Discover (dashboard tab)
+        │    ├─ Messages (dashboard tab)
+        │    ├─ Events (dashboard tab)
+        │    └─ Settings (dashboard tab)
+        │
+        ├─→ SIDEBAR:
+        │    ├─ 🏠 Home
+        │    ├─ 🔍 Discover (in-dashboard tab)
+        │    ├─ 🌟 Full Discover → discover.html ⭐
+        │    ├─ 💬 Messages → messages.html ⭐
+        │    ├─ 📅 Events
+        │    ├─ 👤 My Profile
+        │    └─ ⚙️ Settings
+        │
+        ├─→ DASHBOARD SECTIONS:
+        │    ├─ Home Tab
+        │    │  └─ Shows stats & activity
+        │    │
+        │    ├─ Discover Tab
+        │    │  ├─ "View Full Discovery Page" → discover.html ⭐
+        │    │  └─ Shows sample profiles
+        │    │
+        │    ├─ Messages Tab
+        │    │  ├─ "Open Messages" → messages.html ⭐
+        │    │  └─ Shows message preview
+        │    │
+        │    ├─ Events Tab
+        │    │  └─ Shows events
+        │    │
+        │    ├─ Profile Tab
+        │    │  └─ Shows user info
+        │    │
+        │    └─ Settings Tab
+        │       └─ Shows settings options
+        │
+        ├─→ discover.html (Full Discover Page)
+        │    ├─ Navbar: "← Dashboard" → dashboard.html
+        │    ├─ Navbar: "💬 Messages" → messages.html
+        │    ├─ 7 Tabs: People, Features, How it Works, About, Safety, Tech, FAQ
+        │    ├─ Discover People Tab:
+        │    │  ├─ 6 User profiles
+        │    │  ├─ "Connect" buttons
+        │    │  └─ "Message" buttons → messages.html ⭐
+        │    └─ Search bar for users
+        │
+        └─→ messages.html (Messaging System)
+             ├─ Navbar: "Back" → dashboard.html
+             ├─ Conversation list (left sidebar)
+             ├─ Chat window (main area)
+             ├─ Message input (bottom)
+             └─ Firebase real-time sync
+
+════════════════════════════════════════════════════════════════════════════════
+
+📍 KEY NAVIGATION LINKS:
+════════════════════════════════════════════════════════════════════════════════
+
+FROM index.html:
+  → "Login" button → login.html
+  → "Sign Up" button → signup.html
+
+FROM login.html:
+  → Email/Password login → dashboard.html
+  → Google Sign-In → dashboard.html
+  → "Sign up here" link → signup.html
+
+FROM signup.html:
+  → Email/Password signup → dashboard.html
+  → Google Sign-Up → dashboard.html
+  → "Sign in here" link → login.html
+
+FROM dashboard.html:
+  → "Full Discover" link (sidebar) → discover.html ⭐
+  → "Full Discover" button (discover tab) → discover.html ⭐
+  → "Messages" link (sidebar) → messages.html ⭐
+  → "Open Messages" button (messages tab) → messages.html ⭐
+  → Logout button → login.html
+
+FROM discover.html:
+  → "← Dashboard" button → dashboard.html
+  → "💬 Messages" link (navbar) → messages.html ⭐
+  → "Message" button (user profile) → messages.html ⭐
+  → Back button (navbar) → dashboard.html
+
+FROM messages.html:
+  → "Back" button (navbar) → dashboard.html
+
+════════════════════════════════════════════════════════════════════════════════
+
+🎯 USER JOURNEY PATHS:
+════════════════════════════════════════════════════════════════════════════════
+
+PATH 1: New User Registration
+  index.html → signup.html → dashboard.html → (explore features)
+
+PATH 2: Existing User Login
+  index.html → login.html → dashboard.html → (explore features)
+
+PATH 3: Discover People (From Dashboard)
+  dashboard.html → [Discover tab] → "View Full Discovery Page" → discover.html
+
+PATH 4: Discover People (From Sidebar)
+  dashboard.html → [Sidebar "Full Discover"] → discover.html
+
+PATH 5: Send Message
+  discover.html → [Click "Message"] → messages.html
+  dashboard.html → "Open Messages" → messages.html
+  dashboard.html → [Sidebar "Messages"] → messages.html
+
+PATH 6: Back to Dashboard
+  discover.html → "← Dashboard" → dashboard.html
+  messages.html → "Back" → dashboard.html
+
+════════════════════════════════════════════════════════════════════════════════
+
+📱 RESPONSIVE NAVIGATION:
+════════════════════════════════════════════════════════════════════════════════
+
+Desktop:
+  • Full navbar menu visible
+  • Sidebar visible (if present)
+  • All links accessible
+  • Horizontal navigation
+
+Mobile:
+  • Hamburger menu for navigation
+  • Sidebar becomes vertical
+  • Touch-friendly buttons
+  • Full-width layout
+
+Tablet:
+  • Optimized for medium screens
+  • Navigation adjusted
+  • Responsive layout
+  • All features accessible
+
+════════════════════════════════════════════════════════════════════════════════
+
+🔒 AUTHENTICATION FLOW:
+════════════════════════════════════════════════════════════════════════════════
+
+Public Pages (No Login Required):
+  • index.html (Landing page)
+
+Protected Pages (Login Required):
+  • dashboard.html
+  • discover.html
+  • messages.html
+
+Auto-Redirect:
+  • If logged out and accessing protected page → login.html
+  • If logged in and on login page → dashboard.html
+
+════════════════════════════════════════════════════════════════════════════════
+
+🌟 HIGHLIGHTED FEATURES:
+════════════════════════════════════════════════════════════════════════════════
+
+⭐ NEW PAGES:
+  • discover.html - Complete discover page with 7 tabs & all info
+  • messages.html - Full messaging system with Firebase
+
+⭐ UPDATED PAGES:
+  • dashboard.html - Now has links to discover.html & messages.html
+
+⭐ KEY INTEGRATIONS:
+  • All pages linked together seamlessly
+  • No dead links
+  • Clear navigation path
+  • Easy to find features
+
+════════════════════════════════════════════════════════════════════════════════
+
+✅ TESTING NAVIGATION:
+════════════════════════════════════════════════════════════════════════════════
+
+Test These Paths:
+  ☐ index.html → login.html (click Login)
+  ☐ login.html → signup.html (click "Sign up here")
+  ☐ signup.html → dashboard.html (sign up)
+  ☐ login.html → dashboard.html (login)
+  ☐ dashboard.html → discover.html (Discover tab → button)
+  ☐ dashboard.html → discover.html (Sidebar link)
+  ☐ dashboard.html → messages.html (Messages tab → button)
+  ☐ dashboard.html → messages.html (Sidebar link)
+  ☐ discover.html → dashboard.html (← Dashboard button)
+  ☐ discover.html → messages.html (💬 Messages link)
+  ☐ discover.html → messages.html (Message button on profile)
+  ☐ messages.html → dashboard.html (Back button)
+  ☐ All pages responsive on mobile
+
+════════════════════════════════════════════════════════════════════════════════
+
+🎨 URL STRUCTURE:
+════════════════════════════════════════════════════════════════════════════════
+
+http://localhost:8000/
+  ├─ index.html (default landing)
+  ├─ login.html
+  ├─ signup.html
+  ├─ dashboard.html
+  ├─ discover.html ⭐ NEW
+  ├─ messages.html ⭐
+  └─ config.js
+
+════════════════════════════════════════════════════════════════════════════════
+
+📞 QUICK REFERENCE:
+════════════════════════════════════════════════════════════════════════════════
+
+Landing: http://localhost:8000/
+Login: http://localhost:8000/login.html
+Signup: http://localhost:8000/signup.html
+Dashboard: http://localhost:8000/dashboard.html
+Discover: http://localhost:8000/discover.html ⭐
+Messages: http://localhost:8000/messages.html ⭐
+
+════════════════════════════════════════════════════════════════════════════════
+
+🎯 SUMMARY:
+════════════════════════════════════════════════════════════════════════════════
+
+✅ Complete navigation system
+✅ All pages linked
+✅ No dead links
+✅ Clear user journey
+✅ Responsive design
+✅ Firebase integration
+✅ Ready for deployment
+
+════════════════════════════════════════════════════════════════════════════════

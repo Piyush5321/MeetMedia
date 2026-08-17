@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MeetMedia - Login & Sign Up</title>
+    <title>MeetMedia - Connect, Meet & Network</title>
     <style>
         * {
             margin: 0;
@@ -13,323 +13,519 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            height: 600px;
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-
-        .form-container {
-            position: absolute;
-            top: 0;
-            height: 100%;
-            transition: all 0.6s ease-in-out;
-            width: 50%;
-        }
-
-        .sign-in-container {
-            left: 0;
-            width: 50%;
-            z-index: 2;
-        }
-
-        .sign-up-container {
-            left: 0;
-            width: 50%;
-            opacity: 0;
-            z-index: 1;
-        }
-
-        .container.right-panel-active .sign-in-container {
-            transform: translateX(100%);
-        }
-
-        .container.right-panel-active .sign-up-container {
-            transform: translateX(100%);
-            opacity: 1;
-            z-index: 5;
-        }
-
-        form {
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 0 50px;
-            height: 100%;
-            text-align: center;
-        }
-
-        h1 {
-            font-weight: bold;
             color: #333;
-            margin-bottom: 20px;
+            line-height: 1.6;
         }
 
-        input {
-            background: #eee;
-            border: none;
-            padding: 12px 15px;
-            margin: 8px 0;
-            width: 100%;
-            border-radius: 5px;
-            font-size: 14px;
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
             transition: all 0.3s;
         }
 
-        input:focus {
-            outline: none;
-            background: #ddd;
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        nav a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
         }
 
-        button {
-            border-radius: 20px;
-            border: 1px solid #667eea;
-            background: #667eea;
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 12px 45px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: transform 0.1s;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        button:active {
-            transform: scale(0.95);
-        }
-
-        button:hover {
-            background: #764ba2;
-            border-color: #764ba2;
-        }
-
-        .ghost {
-            background-color: transparent;
-            border-color: white;
-            color: white;
-        }
-
-        .ghost:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .panel-container {
-            position: absolute;
-            height: 100%;
-            width: 50%;
-            right: 0;
-            top: 0;
+        .nav-buttons {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(to right, #667eea, #764ba2);
-            color: white;
-            transform: translateX(0);
-            transition: transform 0.6s ease-in-out;
-            z-index: 6;
-            text-align: center;
-            padding: 0 40px;
+            gap: 15px;
         }
 
-        .container.right-panel-active .panel-container {
-            transform: translateX(-100%);
-        }
-
-        .panel-container h1 {
-            color: white;
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
-
-        .panel-container p {
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .toggle-button {
-            background-color: transparent;
+        .btn-login {
+            background: transparent;
             border: 2px solid white;
             color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 12px 45px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
             transition: all 0.3s;
+            text-decoration: none;
+            font-weight: bold;
         }
 
-        .toggle-button:hover {
-            background-color: white;
+        .btn-login:hover {
+            background: white;
             color: #667eea;
         }
 
+        .btn-signup {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: slideDown 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .cta-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .cta-btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: #f5f7fa;
+            padding: 50px 20px;
+            margin: 50px 0;
+        }
+
+        .how-it-works-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .step {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+
+        .step h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 50px 20px;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .testimonial p {
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .rating {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+        }
+
+        .footer-section a {
+            display: block;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                height: auto;
-                margin: 20px;
+            .hero h1 {
+                font-size: 32px;
             }
 
-            .form-container,
-            .panel-container {
-                width: 100% !important;
-                position: static;
-                transform: none !important;
-                height: auto;
+            .hero p {
+                font-size: 16px;
             }
 
-            form {
-                padding: 40px 20px;
+            nav ul {
+                gap: 15px;
             }
 
-            .panel-container {
-                display: none;
+            .nav-buttons {
+                flex-direction: column;
+                gap: 8px;
             }
 
-            .sign-up-container,
-            .sign-in-container {
-                display: none;
-            }
-
-            .container.right-panel-active .sign-up-container {
-                display: flex;
-            }
-
-            .sign-in-container {
-                display: flex;
+            .feature-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container" id="container">
-        <!-- Sign Up Form -->
-        <div class="form-container sign-up-container">
-            <form id="signupForm">
-                <h1>Create Account</h1>
-                <input type="text" placeholder="Full Name" id="signupName" required />
-                <input type="email" placeholder="Email" id="signupEmail" required />
-                <input type="password" placeholder="Password" id="signupPassword" required />
-                <input type="password" placeholder="Confirm Password" id="signupConfirmPassword" required />
-                <button type="submit">Sign Up</button>
-            </form>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">MeetMedia</div>
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="login.html" class="btn-login">Login</a>
+            <a href="signup.html" class="btn-signup">Sign Up</a>
         </div>
+    </nav>
 
-        <!-- Sign In Form -->
-        <div class="form-container sign-in-container">
-            <form id="signinForm">
-                <h1>Sign In</h1>
-                <input type="email" placeholder="Email" id="signinEmail" required />
-                <input type="password" placeholder="Password" id="signinPassword" required />
-                <a href="#" style="color: #667eea; text-decoration: none; margin-top: 10px; font-size: 14px;">Forgot your password?</a>
-                <button type="submit">Sign In</button>
-            </form>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Connect with Amazing People</h1>
+        <p>Discover, meet, and network with like-minded individuals in your area</p>
+        <div class="cta-buttons">
+            <a href="signup.html" class="cta-btn cta-btn-primary">Get Started Free</a>
+            <a href="login.html" class="cta-btn cta-btn-secondary">Sign In</a>
         </div>
+    </section>
 
-        <!-- Toggle Panel -->
-        <div class="panel-container">
-            <div class="panel">
-                <h1>Welcome to MeetMedia!</h1>
-                <p id="panelText">Don't have an account? Join us and start connecting with others today.</p>
-                <button class="toggle-button ghost" id="signUp">Sign Up</button>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2>Why Choose MeetMedia?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Discover People</h3>
+                <p>Find interesting people near you based on interests and preferences.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Connect & Chat</h3>
+                <p>Send messages and connect with people who share your interests.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Attend Events</h3>
+                <p>Participate in local events and meetups to expand your network.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Safe & Secure</h3>
+                <p>Your privacy and safety are our top priorities with verified profiles.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Verified Profiles</h3>
+                <p>Connect with real people through our verification system.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Global Community</h3>
+                <p>Join a community of millions looking to connect worldwide.</p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        const container = document.getElementById('container');
-        const signUpBtn = document.getElementById('signUp');
-        const signInBtn = document.getElementById('signIn');
-        const signupForm = document.getElementById('signupForm');
-        const signinForm = document.getElementById('signinForm');
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how">
+        <div class="how-it-works-content">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Account</h3>
+                    <p>Sign up with your email or Google account in seconds.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Complete Profile</h3>
+                    <p>Add your interests and preferences to find better matches.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Discover People</h3>
+                    <p>Browse and discover people who share your interests.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Connect</h3>
+                    <p>Start conversations and build meaningful connections.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // Toggle between sign in and sign up
-        signUpBtn.addEventListener('click', () => {
-            container.classList.add('right-panel-active');
-            updatePanelText();
-        });
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <h2>What Our Users Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p>"MeetMedia helped me find like-minded people in my city. Highly recommend!"</p>
+                <div class="testimonial-author">- Sarah Johnson</div>
+            </div>
+            <div class="testimonial">
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p>"Best app for networking and meeting new friends. Love the community!"</p>
+                <div class="testimonial-author">- Mike Chen</div>
+            </div>
+            <div class="testimonial">
+                <div class="rating">⭐⭐⭐⭐⭐</div>
+                <p>"Great platform with genuine people. I've made amazing connections here."</p>
+                <div class="testimonial-author">- Emma Davis</div>
+            </div>
+        </div>
+    </section>
 
-        // Create sign in button for toggling back
-        const panelContainer = document.querySelector('.panel-container');
-        const panelDiv = panelContainer.querySelector('.panel');
-        
-        // Add sign in toggle button
-        const signInToggleBtn = document.createElement('button');
-        signInToggleBtn.className = 'toggle-button ghost';
-        signInToggleBtn.textContent = 'Sign In';
-        signInToggleBtn.addEventListener('click', () => {
-            container.classList.remove('right-panel-active');
-            updatePanelText();
-        });
-
-        // Insert sign in button after sign up button
-        panelDiv.appendChild(signInToggleBtn);
-
-        function updatePanelText() {
-            const panelText = document.getElementById('panelText');
-            const isSignUp = container.classList.contains('right-panel-active');
-            if (isSignUp) {
-                panelText.textContent = 'Already have an account? Sign in and continue your journey.';
-            } else {
-                panelText.textContent = 'Don\'t have an account? Join us and start connecting with others today.';
-            }
-        }
-
-        // Handle sign up form submission
-        signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('signupConfirmPassword').value;
-
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
-
-            if (password.length < 6) {
-                alert('Password must be at least 6 characters long!');
-                return;
-            }
-
-            console.log('Sign Up Data:', { name, email, password });
-            alert('Sign up successful! Welcome ' + name);
-            signupForm.reset();
-        });
-
-        // Handle sign in form submission
-        signinForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('signinEmail').value;
-            const password = document.getElementById('signinPassword').value;
-
-            if (!email || !password) {
-                alert('Please fill in all fields!');
-                return;
-            }
-
-            console.log('Sign In Data:', { email, password });
-            alert('Signed in successfully! Welcome back');
-            signinForm.reset();
-        });
-    </script>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <a href="#">About MeetMedia</a>
+                <a href="#">Blog</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="#">Help Center</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Safety Tips</a>
+                <a href="#">Community Guidelines</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 MeetMedia. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>

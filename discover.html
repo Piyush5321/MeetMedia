@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeetMedia - Discover</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0 30px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar-menu a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .navbar-menu a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar-menu a.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: white;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #eee;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            margin-bottom: -2px;
+        }
+
+        .tab:hover {
+            color: #667eea;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about-section {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .about-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .about-section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Users Grid */
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .user-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .user-card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-card-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            border: 4px solid white;
+        }
+
+        .user-card-content {
+            padding: 20px;
+        }
+
+        .user-card-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .user-card-location {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 12px;
+        }
+
+        .user-card-bio {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .user-card-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .user-card-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-connect {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-connect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-message {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-message:hover {
+            background: #e0e0e0;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* How It Works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .step h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Info Section */
+        .info-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .info-box h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            font-size: 16px;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        /* Safety Guidelines */
+        .guidelines-list {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .guidelines-list h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .guideline-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .guideline-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .guideline-text {
+            flex: 1;
+        }
+
+        .guideline-text strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .guideline-text p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .tech-category {
+            margin-bottom: 25px;
+        }
+
+        .tech-category h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .tech-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .tech-item {
+            background: #f5f7fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid #eee;
+        }
+
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .price-card {
+            background: white;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .price-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .price-card.featured {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+            transform: scale(1.05);
+        }
+
+        .price-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .price-amount {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .price-features {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .price-features li {
+            list-style: none;
+            padding: 8px 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .price-features li:before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .price-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .price-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* FAQ Section */
+        .faq-item {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: #f9f9f9;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #f0f0f0;
+        }
+
+        .faq-answer {
+            padding: 20px;
+            color: #666;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+        }
+
+        .faq-icon.active {
+            transform: rotate(180deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap;
+                padding: 0 15px;
+            }
+
+            .navbar-menu {
+                display: none;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .price-card.featured {
+                transform: scale(1);
+            }
+
+            .features-grid,
+            .users-grid,
+            .stats-grid,
+            .steps,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-brand">🔍 MeetMedia Discover</div>
+        <div class="navbar-menu">
+            <a href="dashboard.html">← Dashboard</a>
+            <a href="messages.html">💬 Messages</a>
+        </div>
+        <div class="navbar-right">
+            <div class="user-profile">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <span id="userName">User</span>
+            </div>
+            <button class="logout-btn" id="backBtn">Back</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h1>Discover MeetMedia</h1>
+        <p class="subtitle">Learn everything about our platform and connect with amazing people</p>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="people">👥 Discover People</button>
+            <button class="tab" data-tab="features">✨ Features</button>
+            <button class="tab" data-tab="howitworks">🎯 How It Works</button>
+            <button class="tab" data-tab="about">ℹ️ About Us</button>
+            <button class="tab" data-tab="safety">🛡️ Safety</button>
+            <button class="tab" data-tab="tech">⚙️ Technology</button>
+            <button class="tab" data-tab="faq">❓ FAQ</button>
+        </div>
+
+        <!-- People Tab -->
+        <div id="people" class="tab-content active">
+            <h2 style="margin-bottom: 20px;">🌟 Discover Connections</h2>
+            <p style="margin-bottom: 30px; color: #666;">Find and connect with amazing people based on interests and location</p>
+            
+            <input type="text" class="search-box" id="searchUsers" placeholder="Search by name or interests...">
+
+            <div class="users-grid" id="usersGrid">
+                <div class="user-card">
+                    <div class="user-card-header">
+                        <div class="user-card-avatar">SJ</div>
+                    </div>
+                    <div class="user-card-content">
+                        <div class="user-card-name">Sarah Johnson</div>
+                        <div class="user-card-location">📍 San Francisco, CA</div>
+                        <div class="user-card-bio">Tech enthusiast, travel lover, and coffee addict. Looking to meet interesting people!</div>
+                        <div class="user-card-buttons">
+                            <button class="user-card-btn btn-connect">👥 Connect</button>
+                            <button class="user-card-btn btn-message" onclick="window.location.href='messages.html'">💬 Message</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-card">
+                    <div class="user-card-header">
+                        <div class="user-card-avatar">MC</div>
+                    </div>
+                    <div class="user-card-content">
+                        <div class="user-card-name">Mike Chen</div>
+                        <div class="user-card-location">📍 New York, NY</div>
+                        <div class="user-card-bio">Software developer, startup enthusiast. Passionate about innovation and meeting new people.</div>
+                        <div class="user-card-buttons">
+                            <button class="user-card-btn btn-connect">👥 Connect</button>
+                            <button class="user-card-btn btn-message" onclick="window.location.href='messages.html'">💬 Message</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-card">
+                    <div class="user-card-header">
+                        <div class="user-card-avatar">ED</div>
+                    </div>
+                    <div class="user-card-content">
+                        <div class="user-card-name">Emma Davis</div>
+                        <div class="user-card-location">📍 Los Angeles, CA</div>
+                        <div class="user-card-bio">Designer and musician. Love exploring new places and having meaningful conversations.</div>
+                        <div class="user-card-buttons">
+                            <button class="user-card-btn btn-connect">👥 Connect</button>
+                            <button class="user-card-btn btn-message" onclick="window.location.href='messages.html'">💬 Message</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-card">
+                    <div class="user-card-header">
+                        <div class="user-card-avatar">AR</div>
+                    </div>
+                    <div class="user-card-content">
+                        <div class="user-card-name">Alex Rodriguez</div>
+                        <div class="user-card-location">📍 Austin, TX</div>
+                        <div class="user-card-bio">Entrepreneur and fitness enthusiast. Exploring new opportunities and connections.</div>
+                        <div class="user-card-buttons">
+                            <button class="user-card-btn btn-connect">👥 Connect</button>
+                            <button class="user-card-btn btn-message" onclick="window.location.href='messages.html'">💬 Message</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-card">
+                    <div class="user-card-header">
+                        <div class="user-card-avatar">JW</div>
+                    </div>
+                    <div class="user-card-content">
+                        <div class="user-card-name">Jessica Williams</div>
+                        <div class="user-card-location">📍 Seattle, WA</div>
+                        <div class="user-card-bio">Marketing professional and outdoor enthusiast. Love hiking and networking events.</div>
+                        <div class="user-card-buttons">
+                            <button class="user-card-btn btn-connect">👥 Connect</button>
+                            <button class="user-card-btn btn-message" onclick="window.location.href='messages.html'">💬 Message</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user-card">
+                    <div class="user-card-header">
+                        <div class="user-card-avatar">TP</div>
+                    </div>
+                    <div class="user-card-content">
+                        <div class="user-card-name">Tom Peterson</div>
+                        <div class="user-card-location">📍 Boston, MA</div>
+                        <div class="user-card-bio">Data scientist and photography enthusiast. Always looking for interesting conversations.</div>
+                        <div class="user-card-buttons">
+                            <button class="user-card-btn btn-connect">👥 Connect</button>
+                            <button class="user-card-btn btn-message" onclick="window.location.href='messages.html'">💬 Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Tab -->
+        <div id="features" class="tab-content">
+            <h2 style="margin-bottom: 30px;">✨ Amazing Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Smart Discovery</h3>
+                    <p>Find people based on interests, location, and preferences. Our algorithm helps you discover meaningful connections.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Real-Time Messaging</h3>
+                    <p>Send and receive messages instantly with Firebase backend. Keep all conversations in one place with full history.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Connect with Others</h3>
+                    <p>Send connection requests and build your network. See who's interested in connecting with you.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Event Discovery</h3>
+                    <p>Find and attend local events, meetups, and networking opportunities to expand your circle.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👤</div>
+                    <h3>Complete Profiles</h3>
+                    <p>Create a detailed profile with photos, bio, interests, and more to attract the right connections.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Safe & Secure</h3>
+                    <p>Firebase-powered security ensures your data is protected. Verified profiles and privacy controls.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Tab -->
+        <div id="howitworks" class="tab-content">
+            <h2 style="margin-bottom: 30px;">🎯 How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Account</h3>
+                    <p>Sign up with email/password or Google. Takes less than 2 minutes to get started.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Complete Profile</h3>
+                    <p>Add your photo, bio, interests, and location. A complete profile increases your visibility.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Discover People</h3>
+                    <p>Browse profiles and find people who match your interests. Use filters to narrow down.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Connect & Message</h3>
+                    <p>Send connection requests or message directly. Start meaningful conversations instantly.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Meet & Network</h3>
+                    <p>Schedule meetups, attend events, and build lasting connections with like-minded people.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <h3>Grow Your Network</h3>
+                    <p>Expand your connections and make the most of the MeetMedia community.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Tab -->
+        <div id="about" class="tab-content">
+            <div class="about-section">
+                <h2>About MeetMedia</h2>
+                <p>MeetMedia is a modern social networking platform designed to help people connect, meet, and build meaningful relationships. Our mission is to make networking easy, safe, and enjoyable for everyone.</p>
+                <p>Founded with the vision of bridging the gap between online and offline connections, MeetMedia combines cutting-edge technology with user-friendly design to create a unique networking experience.</p>
+            </div>
+
+            <div class="info-box">
+                <h2>Our Vision</h2>
+                <p>To create a global community where people can easily discover, connect, and grow together. We believe in the power of human connections and want to make meeting new people accessible to everyone, anywhere.</p>
+            </div>
+
+            <div class="features-grid" style="margin-top: 30px;">
+                <div class="feature-card">
+                    <h3>🎯 Our Mission</h3>
+                    <p>To empower people to build authentic connections and expand their networks in meaningful ways.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>💡 Our Values</h3>
+                    <p>Trust, safety, authenticity, and community are at the core of everything we do.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🚀 Our Goal</h3>
+                    <p>To become the most trusted platform for connecting like-minded individuals globally.</p>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="margin-top: 30px;">
+                <div class="stat-card">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">50M+</div>
+                    <div class="stat-label">Messages Daily</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">180+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Safety Tab -->
+        <div id="safety" class="tab-content">
+            <h2 style="margin-bottom: 30px;">🛡️ Safety & Guidelines</h2>
+            
+            <div class="guidelines-list">
+                <h3>Safety Tips</h3>
+                <div class="guideline-item">
+                    <div class="guideline-icon">✓</div>
+                    <div class="guideline-text">
+                        <strong>Verify Information</strong>
+                        <p>Always verify information before sharing personal details. Use common sense when communicating with new people.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">✓</div>
+                    <div class="guideline-text">
+                        <strong>Protect Your Privacy</strong>
+                        <p>Never share sensitive information like passwords, financial details, or social security numbers.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">✓</div>
+                    <div class="guideline-text">
+                        <strong>Meet in Public</strong>
+                        <p>When meeting someone in person, choose a public location and let a friend know where you're going.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">✓</div>
+                    <div class="guideline-text">
+                        <strong>Report Issues</strong>
+                        <p>If you encounter suspicious behavior or inappropriate content, report it immediately to our support team.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">✓</div>
+                    <div class="guideline-text">
+                        <strong>Respect Boundaries</strong>
+                        <p>Always respect other users' boundaries and privacy preferences. No harassment or spam.</p>
+                    </div>
+                </div>
+
+                <div class="guideline-item">
+                    <div class="guideline-icon">✓</div>
+                    <div class="guideline-text">
+                        <strong>Trust Your Instincts</strong>
+                        <p>If something feels wrong, it probably is. Don't hesitate to block users or end conversations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 30px;">
+                <h2>Our Commitment to Safety</h2>
+                <p>MeetMedia takes user safety seriously. We use advanced security measures, verify user profiles, and have a dedicated support team to address any concerns. All messages are encrypted and your data is protected by industry-standard security protocols.</p>
+            </div>
+        </div>
+
+        <!-- Technology Tab -->
+        <div id="tech" class="tab-content">
+            <h2 style="margin-bottom: 30px;">⚙️ Technology Stack</h2>
+            
+            <div class="tech-stack">
+                <div class="tech-category">
+                    <h3>Frontend</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">HTML5</div>
+                        <div class="tech-item">CSS3</div>
+                        <div class="tech-item">JavaScript ES6+</div>
+                        <div class="tech-item">Responsive Design</div>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Backend & Database</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">Firebase</div>
+                        <div class="tech-item">Firestore Database</div>
+                        <div class="tech-item">Real-time Sync</div>
+                        <div class="tech-item">Cloud Functions</div>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Authentication & Security</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">Firebase Auth</div>
+                        <div class="tech-item">Google OAuth</div>
+                        <div class="tech-item">TLS/HTTPS</div>
+                        <div class="tech-item">Data Encryption</div>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Hosting & Infrastructure</h3>
+                    <div class="tech-items">
+                        <div class="tech-item">Firebase Hosting</div>
+                        <div class="tech-item">CDN</div>
+                        <div class="tech-item">Auto-scaling</div>
+                        <div class="tech-item">99.9% Uptime</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 30px;">
+                <h2>Why These Technologies?</h2>
+                <p>We chose Firebase for its scalability, reliability, and real-time capabilities. Our tech stack ensures fast performance, secure data handling, and a seamless user experience across all devices.</p>
+            </div>
+        </div>
+
+        <!-- FAQ Tab -->
+        <div id="faq" class="tab-content">
+            <h2 style="margin-bottom: 30px;">❓ Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Is MeetMedia free to use?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! MeetMedia is free to use. You can create an account, discover people, send messages, and connect with others at no cost. We may offer premium features in the future, but the core platform is completely free.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do I create an account?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>You can sign up with your email and password or use your Google account for quick registration. Just fill out the required information and you'll be ready to start discovering people on MeetMedia.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Is my data safe on MeetMedia?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we take security very seriously. All data is encrypted in transit and at rest. We use Firebase's enterprise-grade security infrastructure and follow best practices for data protection. You can read our full privacy policy for more details.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Can I delete my account?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, you can delete your account anytime from your settings. Your profile and all associated data will be permanently removed from MeetMedia within 30 days.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do I report inappropriate behavior?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>If you encounter any inappropriate behavior or harassment, you can report the user directly from their profile or message. Our support team will review the report and take appropriate action.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Can I search for people in my area?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! You can filter searches by location to find people near you. This makes it easy to meet people locally and attend events together.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do messages work?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Messages are sent and received in real-time through our messaging system. All messages are stored securely and you can access your full conversation history anytime.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Is there a mobile app?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our platform is fully responsive and works great on mobile browsers. We're currently developing native iOS and Android apps for an even better mobile experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    <script src="config.js"></script>
+
+    <script>
+        let currentUser = null;
+
+        // Check authentication
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                loadUserProfile();
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Load user profile
+        async function loadUserProfile() {
+            try {
+                const userDoc = await firebase.firestore()
+                    .collection('users')
+                    .doc(currentUser.uid)
+                    .get();
+
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    document.getElementById('userName').textContent = userData.name || 'User';
+                    document.getElementById('userAvatar').textContent = userData.name.charAt(0).toUpperCase();
+                }
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+            }
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.getAttribute('data-tab');
+                
+                // Hide all tabs
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Show selected tab
+                document.getElementById(tabName).classList.add('active');
+                tab.classList.add('active');
+            });
+        });
+
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const question = element;
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            
+            // Close other FAQs
+            document.querySelectorAll('.faq-answer').forEach(a => {
+                if (a !== answer) {
+                    a.classList.remove('active');
+                    a.previousElementSibling.querySelector('.faq-icon').classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ
+            answer.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+
+        // Back button
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+
+        // Search users
+        document.getElementById('searchUsers').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.user-card').forEach(card => {
+                const name = card.querySelector('.user-card-name').textContent.toLowerCase();
+                const bio = card.querySelector('.user-card-bio').textContent.toLowerCase();
+                card.style.display = (name.includes(searchTerm) || bio.includes(searchTerm)) ? 'block' : 'none';
+            });
+        });
+
+        // Connect button
+        document.querySelectorAll('.btn-connect').forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('Connection request sent! They will receive a notification.');
+                btn.textContent = '✓ Requested';
+                btn.disabled = true;
+            });
+        });
+    </script>
+</body>
+</html>
